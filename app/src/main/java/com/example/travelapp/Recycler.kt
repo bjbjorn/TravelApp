@@ -43,6 +43,7 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(it.context, i, null)
+            //do it work?
         }
 
         view.findViewById<Button>(R.id.addPhoto).setOnClickListener {
