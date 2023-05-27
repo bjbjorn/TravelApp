@@ -46,9 +46,11 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
             //do it work?
             //pt2
         }
+        //code werkt prima
 
         view.findViewById<Button>(R.id.addPhoto).setOnClickListener {
-            imageChooser();
+            //imageChooser();
+            //
         }
         return RecyclerViewHolder(view)
     }
@@ -64,11 +66,13 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
     }
 
     override fun getItemCount(): Int = items.size
+/*
+fun imageChooser() {
+    val i = Intent(Intent.ACTION_GET_CONTENT)
+    i.setType("image/*")
+    startActivity(Intent.createChooser(i))
+}
+*/
 
-    fun imageChooser() {
-        val i = Intent(Intent.ACTION_GET_CONTENT)
-        i.setType("image/*")
-        startActivity(Intent.createChooser(i))
-    }
-
+ */
 }
