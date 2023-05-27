@@ -33,6 +33,7 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
         imageList = imageList + R.drawable.bijnapasen
         imageList = imageList + R.drawable.gerard
         viewPagerAdapter = ViewPagerAdapter(view.findViewById<TextView>(R.id.textView2).context, imageList)
+        viewPager.showContextMenu()
         viewPager.adapter = viewPagerAdapter
 
 
