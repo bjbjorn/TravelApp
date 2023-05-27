@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.kuleuven.recyclerview.model.Todo
 import com.example.travelapp.databinding.ActivityMain2Binding
-import com.example.travelapp.ui.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,10 +29,7 @@ private lateinit var binding: ActivityMain2Binding
         setSupportActionBar(binding.appBarMain.toolbar)
 
         var sampleTodoItems = arrayListOf(
-            Todo("china", true),
-            Todo("get a GF °_°", false),
-            Todo("Fok smash door", true),
-            Todo("get good grades", false)
+            Todo("china", true, "very cool country lololollo", null),
         )
         var adapter = Recycler(sampleTodoItems)
         binding.appBarMain.contentMain.activityMain.rvwTodo.adapter = adapter
@@ -41,14 +37,12 @@ private lateinit var binding: ActivityMain2Binding
 
 
         binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Hoi papa", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-            val intent = Intent(this,LoginActivity::class.java)
+            val intent = Intent(this, addPostActivity::class.java)
             startActivity(intent)
         }
         binding.appBarMain.contentMain.activityMain.button.setOnClickListener {
             val newTodoTitle = binding.appBarMain.contentMain.activityMain.txtBar.text.toString()
-            sampleTodoItems.add(Todo(newTodoTitle,false))
+            sampleTodoItems.add(Todo(newTodoTitle,false, "ok", null))
             adapter.notifyDataSetChanged()
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout

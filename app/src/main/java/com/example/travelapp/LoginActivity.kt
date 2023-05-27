@@ -1,10 +1,8 @@
-package com.example.travelapp.ui
+package com.example.travelapp
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.travelapp.MainActivity
-import com.example.travelapp.R
 import com.example.travelapp.databinding.ActivityLoginBinding
 import com.google.android.material.snackbar.Snackbar
 
