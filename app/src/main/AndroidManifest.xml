@@ -17,11 +17,11 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:label="@string/title_activity_main2"/>
+            android:theme="@style/Theme.TravelApp.NoActionBar"
+            android:label="@string/title_activity_main"/>
         <activity
-            android:name=".MainActivity2"
-            android:exported="true"
-            android:theme="@style/Theme.TravelApp.NoActionBar">
+            android:name=".ui.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
