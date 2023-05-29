@@ -15,16 +15,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import be.kuleuven.recyclerview.model.Todo
 import com.example.travelapp.databinding.ActivityMain2Binding
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-private lateinit var binding: ActivityMain2Binding
-
+    private lateinit var binding: ActivityMain2Binding
+    private lateinit var galleryBinding : GalleryActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-     binding = ActivityMain2Binding.inflate(layoutInflater)
-     setContentView(binding.root)
+        binding = ActivityMain2Binding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
@@ -33,7 +34,8 @@ private lateinit var binding: ActivityMain2Binding
         )
         var adapter = Recycler(sampleTodoItems)
         binding.appBarMain.contentMain.activityMain.rvwTodo.adapter = adapter
-        binding.appBarMain.contentMain.activityMain.rvwTodo.layoutManager = LinearLayoutManager(this)
+        binding.appBarMain.contentMain.activityMain.rvwTodo.layoutManager =
+            LinearLayoutManager(this)
 
 
         binding.appBarMain.fab.setOnClickListener { view ->
@@ -42,7 +44,7 @@ private lateinit var binding: ActivityMain2Binding
         }
         binding.appBarMain.contentMain.activityMain.button.setOnClickListener {
             val newTodoTitle = binding.appBarMain.contentMain.activityMain.txtBar.text.toString()
-            sampleTodoItems.add(Todo(newTodoTitle,false, "ok", null))
+            sampleTodoItems.add(Todo(newTodoTitle, false, "ok", null))
             adapter.notifyDataSetChanged()
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
@@ -50,11 +52,27 @@ private lateinit var binding: ActivityMain2Binding
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+            ), drawerLayout
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        navView.setNavigationItemSelectedListener {
+            when (R.id.nav_home) {
+                R.id.nav_home -> {
+                    //setContentView(R.layout.activity_gallery)
+                    val intent = Intent(this, GalleryActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

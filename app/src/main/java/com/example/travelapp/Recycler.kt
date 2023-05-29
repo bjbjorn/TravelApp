@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import be.kuleuven.recyclerview.model.Todo
@@ -47,7 +46,7 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
         }
         //code werkt prima
 
-        view.findViewById<Button>(R.id.addPhoto).setOnClickListener {
+        view.findViewById<Button>(R.id.addOnePhoto).setOnClickListener {
             //imageChooser();
             //
         }
