@@ -19,13 +19,13 @@ class addPostActivity: AppCompatActivity() {
 
         setContentView(binding.root)
 
-    binding.button2.setOnClickListener { view ->
-        val todo = Todo(binding.newTitle.text.toString(), false, binding.newText.text.toString(), null)
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("new todo", todo)
-        startActivity(intent)
+        binding.button2.setOnClickListener { view ->
+            val todo = Todo(binding.newTitle.text.toString(), false, binding.newText.text.toString(), null)
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("new todo", todo)
+            startActivity(intent)
 
-    }
+        }
 
     }
 

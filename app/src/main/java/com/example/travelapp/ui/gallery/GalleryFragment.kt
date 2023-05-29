@@ -1,12 +1,16 @@
 package com.example.travelapp.ui.gallery
 
 import android.os.Bundle
+import android.text.TextUtils.replace
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.travelapp.R
 import com.example.travelapp.databinding.FragmentGalleryBinding
 
 class GalleryFragment : Fragment() {
@@ -31,10 +35,12 @@ private var _binding: FragmentGalleryBinding? = null
     galleryViewModel.text.observe(viewLifecycleOwner) {
       textView.text = it
     }
+
+
     return root
   }
 
-override fun onDestroyView() {
+    override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }

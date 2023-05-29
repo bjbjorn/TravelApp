@@ -55,8 +55,12 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         // bind the data to our items: set the todo text view text and checked state accordingly
         val currentTodoItem = items[position]
+
         holder.itemView.apply {
             findViewById<TextView>(R.id.textView2).text = currentTodoItem.title
+
+
+
             findViewById<CheckBox>(R.id.checkBox).isChecked = currentTodoItem.isDone
             findViewById<TextView>(R.id.textView3).text = currentTodoItem.text
         }

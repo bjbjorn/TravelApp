@@ -34,8 +34,8 @@ private var _binding: FragmentSlideshowBinding? = null
     return root
   }
 
-override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+  override fun onDestroyView() {
+      super.onDestroyView()
+      _binding = null
+  }
 }

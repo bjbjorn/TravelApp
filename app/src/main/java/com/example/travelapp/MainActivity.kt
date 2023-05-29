@@ -13,19 +13,23 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.kuleuven.recyclerview.model.Todo
 import com.example.travelapp.databinding.ActivityMain2Binding
+import com.example.travelapp.ui.gallery.GalleryFragment
+import com.example.travelapp.ui.slideshow.SlideshowFragment
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
-    private lateinit var galleryBinding : GalleryActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -63,33 +67,23 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        navView.setNavigationItemSelectedListener {
-            when (R.id.nav_gallery) {
+        navView.setNavigationItemSelectedListener {menuItem->
+            when (menuItem.itemId) {
                 R.id.nav_gallery -> {
-                    setContentView(R.layout.activity_gallery)
-
+                    val galleryFragment = GalleryFragment()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.nav_host_fragment_content_main,galleryFragment)
+                        .commit()
+                    navController.navigate(R.id.nav_gallery)
+                    //setContentView(R.layout.activity_gallery)
+                    true
+                }
+                R.id.nav_slideshow->{
+                    setContentView(R.layout.activity_slideshow)
                     true
                 }
                 else -> false
             }
-            when(R.id.nav_slideshow){
-                R.id.nav_slideshow -> {
-                    //aparte xml komt nog
-                    setContentView(R.layout.activity_gallery)
-                    true
-                }
-                else->false
-            }
-            //
-            /*when(R.id.nav_home){
-                R.id.nav_home->{
-                    //aparte xml komt nog
-                    setContentView(R.layout.activity_add_post)
-                    true
-                }
-                else->false
-            }*/
-
         }
     }
 
@@ -98,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main_activity2, menu)
         return true
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
