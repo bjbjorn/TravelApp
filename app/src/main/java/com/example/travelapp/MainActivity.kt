@@ -2,6 +2,8 @@ package com.example.travelapp
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
     private lateinit var galleryBinding : GalleryActivity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -61,17 +64,32 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         navView.setNavigationItemSelectedListener {
-            when (R.id.nav_home) {
-                R.id.nav_home -> {
-                    //setContentView(R.layout.activity_gallery)
-                    val intent = Intent(this, GalleryActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(intent)
+            when (R.id.nav_gallery) {
+                R.id.nav_gallery -> {
+                    setContentView(R.layout.activity_gallery)
+
                     true
                 }
-
                 else -> false
             }
+            when(R.id.nav_slideshow){
+                R.id.nav_slideshow -> {
+                    //aparte xml komt nog
+                    setContentView(R.layout.activity_gallery)
+                    true
+                }
+                else->false
+            }
+            //
+            /*when(R.id.nav_home){
+                R.id.nav_home->{
+                    //aparte xml komt nog
+                    setContentView(R.layout.activity_add_post)
+                    true
+                }
+                else->false
+            }*/
+
         }
     }
 
@@ -85,4 +103,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+
 }
