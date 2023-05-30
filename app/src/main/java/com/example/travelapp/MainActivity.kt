@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.CheckBox
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.snackbar.Snackbar
@@ -74,13 +75,24 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        val galleryFragment = GalleryFragment()
+        supportFragmentManager.beginTransaction()
+            .hide(galleryFragment)
+            .commit()
 
         navView.setNavigationItemSelectedListener {menuItem->
             when (menuItem.itemId) {
-                R.id.nav_gallery -> {
-                    val galleryFragment = GalleryFragment()
+                R.id.nav_home -> {
+                    binding.appBarMain.contentMain.activityMain.rvwTodo.visibility = View.VISIBLE
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment_content_main,galleryFragment)
+                        .remove(galleryFragment)
+                        .commit()
+                    true
+                }
+                R.id.nav_gallery -> {
+                    binding.appBarMain.contentMain.activityMain.rvwTodo.visibility = View.INVISIBLE
+                    supportFragmentManager.beginTransaction()
+                        .show(galleryFragment)
                         .commit()
                     navController.navigate(R.id.nav_gallery)
                     //setContentView(R.layout.activity_gallery)
@@ -103,7 +115,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        todoRepository.save(todoList)
+       // todoRepository.save(todoList)
     }
     private fun restoreFromLast(){
         todoList.addAll(todoRepository.load())
