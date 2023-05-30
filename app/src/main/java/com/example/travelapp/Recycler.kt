@@ -10,7 +10,6 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import be.kuleuven.recyclerview.model.Todo
 import com.example.travelapp.databinding.RecyclerBinding
 
 import androidx.viewpager.widget.ViewPager
@@ -44,11 +43,9 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
             i.data = Uri.parse(url)
             startActivity(it.context, i, null)
         }
-        //code werkt prima
 
         view.findViewById<Button>(R.id.addOnePhoto).setOnClickListener {
             //imageChooser();
-            //
         }
         return RecyclerViewHolder(view)
     }
@@ -57,12 +54,14 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
         val currentTodoItem = items[position]
 
         holder.itemView.apply {
+            //val checkBoxTodo = findViewById<CheckBox>(R.id.checkBox)
+
             findViewById<TextView>(R.id.textView2).text = currentTodoItem.title
-
-
-
             findViewById<CheckBox>(R.id.checkBox).isChecked = currentTodoItem.isDone
             findViewById<TextView>(R.id.textView3).text = currentTodoItem.text
+
+            //checkBoxTodo.isChecked = currentTodoItem.isDone
+
         }
 
 

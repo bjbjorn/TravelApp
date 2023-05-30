@@ -1,8 +1,11 @@
 package com.example.travelapp
 import android.content.Intent
+import android.location.LocationManager
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.CheckBox
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -14,17 +17,19 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import com.example.travelapp.TodoRepo
+
 import androidx.recyclerview.widget.LinearLayoutManager
-import be.kuleuven.recyclerview.model.Todo
 import com.example.travelapp.databinding.ActivityMain2Binding
 import com.example.travelapp.ui.gallery.GalleryFragment
 import com.example.travelapp.ui.slideshow.SlideshowFragment
 
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
+    private lateinit var todoRepository : TodoRepo
+    private val todoList = arrayListOf<Todo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +41,10 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        var sampleTodoItems = arrayListOf(
+        /*var sampleTodoItems = arrayListOf(
             Todo("china", true, "very cool country lololollo", null),
-        )
-        var adapter = Recycler(sampleTodoItems)
+        )*/
+        var adapter = Recycler(todoList)
         binding.appBarMain.contentMain.activityMain.rvwTodo.adapter = adapter
         binding.appBarMain.contentMain.activityMain.rvwTodo.layoutManager =
             LinearLayoutManager(this)
@@ -51,8 +56,11 @@ class MainActivity : AppCompatActivity() {
         }
         binding.appBarMain.contentMain.activityMain.button.setOnClickListener {
             val newTodoTitle = binding.appBarMain.contentMain.activityMain.txtBar.text.toString()
-            sampleTodoItems.add(Todo(newTodoTitle, false, "ok", null))
+            //todoList.add(Todo(newTodoTitle,false,"",null))
+            todoList.add(Todo(newTodoTitle, false, "ok", null))
+            //adapter.notifyItemInserted(todoList.size-1)
             adapter.notifyDataSetChanged()
+
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -93,7 +101,13 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        todoRepository.save(todoList)
+    }
+    private fun restoreFromLast(){
+        todoList.addAll(todoRepository.load())
+    }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
