@@ -54,14 +54,19 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
         val currentTodoItem = items[position]
 
         holder.itemView.apply {
-            //val checkBoxTodo = findViewById<CheckBox>(R.id.checkBox)
+            //checkbox blijft aangevinkt
+            //maar bij rerun nog niet opgeslagen, maar dus wel progression
+
+            val checkBoxTodo = findViewById<CheckBox>(R.id.checkBox)
 
             findViewById<TextView>(R.id.textView2).text = currentTodoItem.title
             findViewById<CheckBox>(R.id.checkBox).isChecked = currentTodoItem.isDone
             findViewById<TextView>(R.id.textView3).text = currentTodoItem.text
-
             //checkBoxTodo.isChecked = currentTodoItem.isDone
-
+            checkBoxTodo.isChecked = currentTodoItem.isDone
+            checkBoxTodo.setOnClickListener{
+                currentTodoItem.isDone = checkBoxTodo.isChecked
+            }
         }
 
 
