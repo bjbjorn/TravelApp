@@ -1,17 +1,16 @@
-package com.gtappdevelopers.kotlingfgproject
+package com.example.travelapp
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.viewpager.widget.PagerAdapter
-import com.example.travelapp.R
-import com.example.travelapp.Recycler
 import java.util.*
 
-class ViewPagerAdapter(val context: Context, val imageList: List<Int>) : PagerAdapter() {
+class ViewPagerAdapter(val context: Context, var imageList: List<Bitmap>) : PagerAdapter() {
     // on below line we are creating a method
     // as get count to return the size of the list.
     override fun getCount(): Int {
@@ -41,7 +40,7 @@ class ViewPagerAdapter(val context: Context, val imageList: List<Int>) : PagerAd
 
         // on below line we are setting
         // image resource for image view.
-        imageView.setImageResource(imageList.get(position))
+        imageView.setImageBitmap(imageList[position])
 
         // on the below line we are adding this
         // item view to the container.
@@ -57,4 +56,9 @@ class ViewPagerAdapter(val context: Context, val imageList: List<Int>) : PagerAd
         // on below line we are removing view
         container.removeView(`object` as RelativeLayout)
     }
+
+    fun addToList(bitmap: Bitmap) {
+        imageList = imageList + bitmap
+    }
+
 }

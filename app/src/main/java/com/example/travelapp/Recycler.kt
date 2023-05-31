@@ -2,18 +2,19 @@ package com.example.travelapp;
 
 import android.content.Intent
 import android.net.Uri
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.travelapp.databinding.RecyclerBinding
 
 import androidx.viewpager.widget.ViewPager
-import com.gtappdevelopers.kotlingfgproject.ViewPagerAdapter
 
 class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerViewHolder>() {
 
@@ -22,18 +23,19 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
     lateinit var viewPager: ViewPager
     lateinit var viewPagerAdapter: ViewPagerAdapter
     lateinit var imageList: List<Int>
+    lateinit var mainActivity: MainActivity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler, parent, false)
 
-        viewPager = view.findViewById(R.id.idViewPager)
-        imageList = ArrayList<Int>()
+        val foto = view.findViewById(R.id.idViewPager2) as ImageView
+        foto.setImageResource(R.drawable.gerard)
+        /*imageList = ArrayList<Int>()
         imageList = imageList + R.drawable.bijnapasen
         imageList = imageList + R.drawable.gerard
         viewPagerAdapter = ViewPagerAdapter(view.findViewById<TextView>(R.id.textView2).context, imageList)
         viewPager.showContextMenu()
-        viewPager.adapter = viewPagerAdapter
-
+        viewPager.adapter = viewPagerAdapter*/
 
 
         view.findViewById<Button>(R.id.viewOnMaps).setOnClickListener {
@@ -45,10 +47,15 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
         }
 
         view.findViewById<Button>(R.id.addOnePhoto).setOnClickListener {
-            //imageChooser();
+            mainActivity = MainActivity()
+            mainActivity.camera()
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivity(it.context, intent, null)
         }
         return RecyclerViewHolder(view)
     }
+
+
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         // bind the data to our items: set the todo text view text and checked state accordingly
         val currentTodoItem = items[position]
@@ -73,6 +80,8 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
     }
 
     override fun getItemCount(): Int = items.size
+
+
 /*
 fun imageChooser() {
     val i = Intent(Intent.ACTION_GET_CONTENT)

@@ -1,29 +1,21 @@
 package com.example.travelapp.ui.gallery
 
 import android.app.Activity
-import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils.replace
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.ViewPager
 import com.example.travelapp.R
 import com.example.travelapp.databinding.FragmentGalleryBinding
-import com.google.android.material.snackbar.Snackbar
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.example.travelapp.ViewPagerAdapter
 
 class GalleryFragment : Fragment() {
 
@@ -33,16 +25,26 @@ private var _binding: FragmentGalleryBinding? = null
   private val binding get() = _binding!!
   private val CAMERA_REQUEST_CODE = 1
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
+  lateinit var imageList: List<Bitmap>
+  lateinit var viewPager: ViewPager
+  lateinit var viewPagerAdapter: ViewPagerAdapter
+
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    super.onCreate(savedInstanceState)
+    _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+    val root: View = binding.root
+
+    viewPager = root.findViewById(R.id.idViewPager)
+    imageList = ArrayList()
+    val bijnaPasen = BitmapFactory.decodeResource(resources, R.drawable.bijnapasen)
+    imageList = imageList + bijnaPasen
+    val gerard = BitmapFactory.decodeResource(resources, R.drawable.gerard)
+    imageList = imageList + gerard
+    viewPagerAdapter = ViewPagerAdapter(root.context, imageList)
+    viewPager.adapter = viewPagerAdapter
     val galleryViewModel =
             ViewModelProvider(this).get(GalleryViewModel::class.java)
 
-    _binding = FragmentGalleryBinding.inflate(inflater, container, false)
-    val root: View = binding.root
 
 
     binding.cameraBtn.setOnClickListener {
@@ -52,36 +54,10 @@ private var _binding: FragmentGalleryBinding? = null
     return root
   }
 
-  private fun cameraCheckPermission() {
-    Dexter.withContext(view?.context)
-      .withPermissions(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE).withListener(
-
-        object : MultiplePermissionsListener{
-          override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-            report?.let {
-              if (report.areAllPermissionsGranted()) {
-                camera()
-              }
-            }
-          }
-
-          override fun onPermissionRationaleShouldBeShown(
-            p0: MutableList<PermissionRequest>?,
-            p1: PermissionToken?
-          ) {
-            showRotationalDialogForPermission()
-          }
-
-        }
-      )
-  }
 
   private fun camera() {
     val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
     startActivityForResult(intent, CAMERA_REQUEST_CODE)
-  }
-  private fun showRotationalDialogForPermission() {
-    view?.let { Snackbar.make(it, "WRONG", Snackbar.LENGTH_LONG).setAction("Action", null).show() }
   }
 
   override fun onDestroyView() {
@@ -97,7 +73,9 @@ private var _binding: FragmentGalleryBinding? = null
         CAMERA_REQUEST_CODE->{
 
           val bitmap = data?.extras?.get("data") as Bitmap
-          binding.imageView2.setImageBitmap(bitmap)
+          imageList = imageList + bitmap
+          viewPagerAdapter.addToList(bitmap)
+          viewPagerAdapter.notifyDataSetChanged()
         }
       }
     }

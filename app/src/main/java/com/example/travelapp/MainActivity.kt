@@ -1,12 +1,17 @@
 package com.example.travelapp
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -17,10 +22,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.navigation.NavController
 import com.example.travelapp.TodoRepo
 
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.travelapp.databinding.ActivityMain2Binding
 import com.example.travelapp.ui.gallery.GalleryFragment
 import com.example.travelapp.ui.slideshow.SlideshowFragment
@@ -31,6 +39,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
     private lateinit var todoRepository : TodoRepo
     private val todoList = arrayListOf<Todo>()
+    private val galleryFragment = GalleryFragment()
+    private val CAMERA_REQUEST_CODE = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +51,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.appBarMain.toolbar)
-
-        /*var sampleTodoItems = arrayListOf(
-            Todo("china", true, "very cool country lololollo", null),
-        )*/
-        var adapter = Recycler(todoList)
-        binding.appBarMain.contentMain.activityMain.rvwTodo.adapter = adapter
-        binding.appBarMain.contentMain.activityMain.rvwTodo.layoutManager =
+        val adapter = Recycler(todoList)
+        binding.appBarMain.contentMain.activityMain.rvwPost.adapter = adapter
+        binding.appBarMain.contentMain.activityMain.rvwPost.layoutManager =
             LinearLayoutManager(this)
 
 
@@ -57,12 +63,11 @@ class MainActivity : AppCompatActivity() {
         }
         binding.appBarMain.contentMain.activityMain.button.setOnClickListener {
             val newTodoTitle = binding.appBarMain.contentMain.activityMain.txtBar.text.toString()
-            //todoList.add(Todo(newTodoTitle,false,"",null))
             todoList.add(Todo(newTodoTitle, false, "ok", null))
             //adapter.notifyItemInserted(todoList.size-1)
             adapter.notifyDataSetChanged()
-
         }
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -75,25 +80,21 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        val galleryFragment = GalleryFragment()
-        supportFragmentManager.beginTransaction()
-            .hide(galleryFragment)
-            .commit()
 
         navView.setNavigationItemSelectedListener {menuItem->
             when (menuItem.itemId) {
                 R.id.nav_home -> {
-                    binding.appBarMain.contentMain.activityMain.rvwTodo.visibility = View.VISIBLE
-                    supportFragmentManager.beginTransaction()
-                        .remove(galleryFragment)
-                        .commit()
+                    binding.appBarMain.contentMain.activityMain.rvwPost.visibility = View.VISIBLE
+                    binding.appBarMain.contentMain.activityMain.txtBar.visibility = View.VISIBLE
+                    binding.appBarMain.contentMain.activityMain.button.visibility = View.VISIBLE
                     true
                 }
                 R.id.nav_gallery -> {
-                    binding.appBarMain.contentMain.activityMain.rvwTodo.visibility = View.INVISIBLE
-                    supportFragmentManager.beginTransaction()
-                        .show(galleryFragment)
-                        .commit()
+                    binding.appBarMain.contentMain.activityMain.rvwPost.visibility = View.INVISIBLE
+                    binding.appBarMain.contentMain.activityMain.txtBar.visibility = View.INVISIBLE
+                    binding.appBarMain.contentMain.activityMain.button.visibility = View.INVISIBLE
+
+                    supportFragmentManager.beginTransaction().show(galleryFragment).commit()
                     navController.navigate(R.id.nav_gallery)
                     //setContentView(R.layout.activity_gallery)
                     true
@@ -123,6 +124,26 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when(requestCode){
+                CAMERA_REQUEST_CODE->{
+
+                    val bitmap = data?.extras?.get("data") as Bitmap
+                    val foto = findViewById<ImageView>(R.id.idViewPager)
+                    foto.setImageBitmap(bitmap)
+                }
+            }
+        }
+    }
+
+    fun camera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, CAMERA_REQUEST_CODE)
     }
 
 
