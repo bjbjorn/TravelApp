@@ -1,11 +1,12 @@
-package com.example.travelapp
+package com.example.travelapp.ui.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.example.travelapp.MainActivity
+import com.example.travelapp.R
 import com.example.travelapp.databinding.ActivityLoginBinding
-import com.google.android.material.snackbar.Snackbar
 
 class LoginActivity : AppCompatActivity() {
 

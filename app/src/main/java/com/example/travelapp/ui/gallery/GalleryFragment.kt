@@ -9,15 +9,12 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.example.travelapp.R
 import com.example.travelapp.databinding.FragmentGalleryBinding
-import com.example.travelapp.ViewPagerAdapter
 
 class GalleryFragment : Fragment() {
 
@@ -38,14 +35,8 @@ private var _binding: FragmentGalleryBinding? = null
 
     viewPager = root.findViewById(R.id.idViewPager)
     imageList = ArrayList()
-    val bijnaPasen = BitmapFactory.decodeResource(resources, R.drawable.bijnapasen)
-    imageList = imageList + bijnaPasen
-    val gerard = BitmapFactory.decodeResource(resources, R.drawable.gerard)
-    imageList = imageList + gerard
     viewPagerAdapter = ViewPagerAdapter(root.context, imageList)
     viewPager.adapter = viewPagerAdapter
-    val galleryViewModel =
-            ViewModelProvider(this).get(GalleryViewModel::class.java)
 
 
 

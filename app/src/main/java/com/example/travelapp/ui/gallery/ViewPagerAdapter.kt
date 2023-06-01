@@ -1,4 +1,4 @@
-package com.example.travelapp
+package com.example.travelapp.ui.gallery
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.viewpager.widget.PagerAdapter
+import com.example.travelapp.R
 import java.util.*
 
 class ViewPagerAdapter(val context: Context, var imageList: List<Bitmap>) : PagerAdapter() {

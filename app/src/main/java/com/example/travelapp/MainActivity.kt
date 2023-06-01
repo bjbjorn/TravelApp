@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -22,6 +21,7 @@ import com.example.travelapp.data.data.PostRoomRepository
 import com.example.travelapp.databinding.ActivityMain2Binding
 import com.example.travelapp.ui.gallery.GalleryFragment
 import com.example.travelapp.ui.home.HomeFragment
+import com.example.travelapp.ui.home.Recycler
 import com.google.android.material.internal.ViewUtils.hideKeyboard
 
 
@@ -106,10 +106,6 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().show(galleryFragment).commit()
                     navController.navigate(R.id.nav_gallery)
                     //setContentView(R.layout.activity_gallery)
-                    true
-                }
-                R.id.nav_slideshow->{
-                    setContentView(R.layout.activity_slideshow)
                     true
                 }
                 else -> false
