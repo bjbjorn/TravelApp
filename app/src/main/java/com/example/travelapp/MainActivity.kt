@@ -54,12 +54,15 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.appBarMain.contentMain.activityMain.button.setOnClickListener {
-            val newPostTitle = binding.appBarMain.contentMain.activityMain.txtBar.text.toString()
-            postList.add(Post(newPostTitle, account, false, null))
+            val newPostTitle = binding.appBarMain.contentMain.activityMain.txtTitle.text.toString()
+            val newPostText = binding.appBarMain.contentMain.activityMain.txtText.text.toString()
+            postList.add(Post(newPostTitle, account, false, newPostText))
             //adapter.notifyItemInserted(todoList.size-1)
             adapter.notifyDataSetChanged()
-            binding.appBarMain.contentMain.activityMain.txtBar.text.clear()
-            binding.appBarMain.contentMain.activityMain.txtBar.clearFocus()
+            binding.appBarMain.contentMain.activityMain.txtTitle.text.clear()
+            binding.appBarMain.contentMain.activityMain.txtTitle.clearFocus()
+            binding.appBarMain.contentMain.activityMain.txtText.text.clear()
+            binding.appBarMain.contentMain.activityMain.txtText.clearFocus()
             hideKeyboard(it)
 
         }
@@ -87,7 +90,8 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     binding.appBarMain.contentMain.activityMain.rvwPost.visibility = View.VISIBLE
-                    binding.appBarMain.contentMain.activityMain.txtBar.visibility = View.VISIBLE
+                    binding.appBarMain.contentMain.activityMain.txtTitle.visibility = View.VISIBLE
+                    binding.appBarMain.contentMain.activityMain.txtText.visibility = View.VISIBLE
                     binding.appBarMain.contentMain.activityMain.button.visibility = View.VISIBLE
                     supportFragmentManager.beginTransaction().show(homeFragment).commit()
                     navController.navigate(R.id.nav_home)
@@ -95,7 +99,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_gallery -> {
                     binding.appBarMain.contentMain.activityMain.rvwPost.visibility = View.INVISIBLE
-                    binding.appBarMain.contentMain.activityMain.txtBar.visibility = View.INVISIBLE
+                    binding.appBarMain.contentMain.activityMain.txtTitle.visibility = View.INVISIBLE
+                    binding.appBarMain.contentMain.activityMain.txtText.visibility = View.INVISIBLE
                     binding.appBarMain.contentMain.activityMain.button.visibility = View.INVISIBLE
 
                     supportFragmentManager.beginTransaction().show(galleryFragment).commit()
