@@ -56,8 +56,7 @@ class MainActivity : AppCompatActivity() {
         binding.appBarMain.contentMain.activityMain.button.setOnClickListener {
             val newPostTitle = binding.appBarMain.contentMain.activityMain.txtTitle.text.toString()
             val newPostText = binding.appBarMain.contentMain.activityMain.txtText.text.toString()
-            postList.add(0,Post(newPostTitle, account, false, newPostText))
-            //adapter.notifyItemInserted(todoList.size-1)
+            postList.add(Post(newPostTitle, account, false, newPostText))
             adapter.notifyDataSetChanged()
             binding.appBarMain.contentMain.activityMain.txtTitle.text.clear()
             binding.appBarMain.contentMain.activityMain.txtTitle.clearFocus()
@@ -105,7 +104,6 @@ class MainActivity : AppCompatActivity() {
 
                     supportFragmentManager.beginTransaction().show(galleryFragment).commit()
                     navController.navigate(R.id.nav_gallery)
-                    //setContentView(R.layout.activity_gallery)
                     true
                 }
                 else -> false
@@ -118,7 +116,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main_activity2, menu)
         return true
     }
