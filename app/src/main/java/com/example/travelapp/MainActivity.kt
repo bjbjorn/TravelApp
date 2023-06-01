@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         binding.appBarMain.contentMain.activityMain.button.setOnClickListener {
             val newPostTitle = binding.appBarMain.contentMain.activityMain.txtTitle.text.toString()
             val newPostText = binding.appBarMain.contentMain.activityMain.txtText.text.toString()
-            postList.add(Post(newPostTitle, account, false, newPostText))
+            postList.add(0,Post(newPostTitle, account, false, newPostText))
             //adapter.notifyItemInserted(todoList.size-1)
             adapter.notifyDataSetChanged()
             binding.appBarMain.contentMain.activityMain.txtTitle.text.clear()
