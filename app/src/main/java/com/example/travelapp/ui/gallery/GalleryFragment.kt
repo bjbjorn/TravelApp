@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
@@ -47,8 +49,21 @@ private var _binding: FragmentGalleryBinding? = null
 
 
 
+    val requestCamera= registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+      if (it) {
+        camera()
+      } else {
+        Toast.makeText(
+          context,
+          "Permission not granted, you can grant permission in app settings",
+          Toast.LENGTH_LONG
+        ).show()
+      }
+    }
+
+
     binding.cameraBtn.setOnClickListener {
-      camera()
+      requestCamera.launch(android.Manifest.permission.CAMERA)
     }
 
     return root

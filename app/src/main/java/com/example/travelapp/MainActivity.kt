@@ -1,5 +1,6 @@
 package com.example.travelapp
 import android.app.Activity
+import android.app.Instrumentation.ActivityResult
 import android.content.Intent
 import android.graphics.Bitmap
 import android.location.LocationManager
@@ -12,6 +13,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -23,6 +27,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.core.view.get
 import androidx.navigation.NavController
 import com.example.travelapp.TodoRepo
@@ -46,15 +51,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val extras = intent.extras
+        val account = extras?.get("name") as String
 
         setSupportActionBar(binding.appBarMain.toolbar)
         val adapter = Recycler(todoList)
         binding.appBarMain.contentMain.activityMain.rvwPost.adapter = adapter
-        binding.appBarMain.contentMain.activityMain.rvwPost.layoutManager =
-            LinearLayoutManager(this)
+        binding.appBarMain.contentMain.activityMain.rvwPost.layoutManager = LinearLayoutManager(this)
 
 
         binding.appBarMain.fab.setOnClickListener { view ->
@@ -80,6 +86,10 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        navigationView.getHeaderView(0).findViewById<TextView>(R.id.nav_account_name).text = account
+
 
         navView.setNavigationItemSelectedListener {menuItem->
             when (menuItem.itemId) {
@@ -141,10 +151,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun camera() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, CAMERA_REQUEST_CODE)
-    }
 
 
 }

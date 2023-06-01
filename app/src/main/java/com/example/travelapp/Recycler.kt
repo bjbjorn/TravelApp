@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
@@ -15,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.travelapp.databinding.RecyclerBinding
 
 import androidx.viewpager.widget.ViewPager
-
+import com.squareup.picasso.Picasso
+import okhttp3.*
+import org.json.JSONObject
+import java.io.IOException
 class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerViewHolder>() {
 
     inner class RecyclerViewHolder(currentItemView: View) : RecyclerView.ViewHolder(currentItemView)
@@ -24,18 +28,14 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
     lateinit var viewPagerAdapter: ViewPagerAdapter
     lateinit var imageList: List<Int>
     lateinit var mainActivity: MainActivity
+    private val httpClient = OkHttpClient()
+    private lateinit var view: View
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler, parent, false)
+        view = LayoutInflater.from(parent.context).inflate(R.layout.recycler, parent, false)
 
         val foto = view.findViewById(R.id.idViewPager2) as ImageView
         foto.setImageResource(R.drawable.gerard)
-        /*imageList = ArrayList<Int>()
-        imageList = imageList + R.drawable.bijnapasen
-        imageList = imageList + R.drawable.gerard
-        viewPagerAdapter = ViewPagerAdapter(view.findViewById<TextView>(R.id.textView2).context, imageList)
-        viewPager.showContextMenu()
-        viewPager.adapter = viewPagerAdapter*/
 
 
         view.findViewById<Button>(R.id.viewOnMaps).setOnClickListener {
@@ -47,10 +47,6 @@ class Recycler(val items: List<Todo>) : RecyclerView.Adapter<Recycler.RecyclerVi
         }
 
         view.findViewById<Button>(R.id.addOnePhoto).setOnClickListener {
-            mainActivity = MainActivity()
-            mainActivity.camera()
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivity(it.context, intent, null)
         }
         return RecyclerViewHolder(view)
     }
