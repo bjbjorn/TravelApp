@@ -1,23 +1,12 @@
 package com.example.travelapp
 import android.app.Activity
-import android.app.Instrumentation.ActivityResult
 import android.content.Intent
 import android.graphics.Bitmap
-import android.location.LocationManager
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.provider.MediaStore
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.CheckBox
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.ActionBarDrawerToggle
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,59 +15,58 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.view.children
-import androidx.core.view.get
-import androidx.navigation.NavController
-import com.example.travelapp.TodoRepo
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.travelapp.data.data.Post
+import com.example.travelapp.data.data.PostRepository
+import com.example.travelapp.data.data.PostRoomRepository
 import com.example.travelapp.databinding.ActivityMain2Binding
 import com.example.travelapp.ui.gallery.GalleryFragment
-import com.example.travelapp.ui.slideshow.SlideshowFragment
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
-    private lateinit var todoRepository : TodoRepo
-    private val todoList = arrayListOf<Todo>()
+    private lateinit var postRepository : PostRepository
+    private lateinit var adapter: Recycler
+    private val postList = arrayListOf<Post>()
     private val galleryFragment = GalleryFragment()
     private val CAMERA_REQUEST_CODE = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+        postRepository = PostRoomRepository(applicationContext)
 
         val extras = intent.extras
         val account = extras?.get("name") as String
 
+        adapter = Recycler(postList)
+
+
         setSupportActionBar(binding.appBarMain.toolbar)
-        val adapter = Recycler(todoList)
         binding.appBarMain.contentMain.activityMain.rvwPost.adapter = adapter
         binding.appBarMain.contentMain.activityMain.rvwPost.layoutManager = LinearLayoutManager(this)
 
 
-        binding.appBarMain.fab.setOnClickListener { view ->
-            val intent = Intent(this, addPostActivity::class.java)
-            startActivity(intent)
-        }
         binding.appBarMain.contentMain.activityMain.button.setOnClickListener {
-            val newTodoTitle = binding.appBarMain.contentMain.activityMain.txtBar.text.toString()
-            todoList.add(Todo(newTodoTitle, false, "ok", null))
+            val newPostTitle = binding.appBarMain.contentMain.activityMain.txtBar.text.toString()
+            postList.add(Post(newPostTitle, false, "texttexttexttext"))
             //adapter.notifyItemInserted(todoList.size-1)
             adapter.notifyDataSetChanged()
+            binding.appBarMain.contentMain.activityMain.txtBar.text.clear()
+            binding.appBarMain.contentMain.activityMain.txtBar.clearFocus()
+
         }
+        restorePostsFromPreviousSession()
+        adapter.notifyDataSetChanged()
+
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
@@ -118,6 +106,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun restorePostsFromPreviousSession() {
+        postList.addAll(postRepository.load())
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main_activity2, menu)
@@ -126,10 +118,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-       // todoRepository.save(todoList)
-    }
-    private fun restoreFromLast(){
-        todoList.addAll(todoRepository.load())
+        postRepository.save(postList)
     }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
