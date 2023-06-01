@@ -44,16 +44,11 @@ class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerVi
             findViewById<TextView>(R.id.textView2).text = currentTodoItem.title
             findViewById<CheckBox>(R.id.checkBox).isChecked = currentTodoItem.isDone
             findViewById<TextView>(R.id.textView3).text = currentTodoItem.text
-            //checkBoxTodo.isChecked = currentTodoItem.isDone
             checkBoxTodo.isChecked = currentTodoItem.isDone
             checkBoxTodo.setOnClickListener{
                 currentTodoItem.isDone = checkBoxTodo.isChecked
             }
         }
-
-
     }
-
     override fun getItemCount(): Int = items.size
-
 }

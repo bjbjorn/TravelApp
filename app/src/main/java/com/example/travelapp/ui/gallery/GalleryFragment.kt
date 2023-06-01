@@ -3,7 +3,6 @@ package com.example.travelapp.ui.gallery
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -19,8 +18,6 @@ import com.example.travelapp.databinding.FragmentGalleryBinding
 class GalleryFragment : Fragment() {
 
 private var _binding: FragmentGalleryBinding? = null
-  // This property is only valid between onCreateView and
-  // onDestroyView.
   private val binding get() = _binding!!
   private val CAMERA_REQUEST_CODE = 1
 
@@ -37,8 +34,6 @@ private var _binding: FragmentGalleryBinding? = null
     imageList = ArrayList()
     viewPagerAdapter = ViewPagerAdapter(root.context, imageList)
     viewPager.adapter = viewPagerAdapter
-
-
 
     val requestCamera= registerForActivityResult(ActivityResultContracts.RequestPermission()) {
       if (it) {
@@ -86,5 +81,4 @@ private var _binding: FragmentGalleryBinding? = null
       }
     }
   }
-
 }
