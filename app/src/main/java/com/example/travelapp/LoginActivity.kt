@@ -29,7 +29,6 @@ class LoginActivity : AppCompatActivity() {
 
             }
             else {
-                Snackbar.make(view, "WRONG", Snackbar.LENGTH_LONG).setAction("Action", null).show()
                 binding.textView4.visibility = View.VISIBLE
                 binding.btnYes.visibility = View.VISIBLE
                 binding.btnNo.visibility = View.VISIBLE
@@ -37,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.btnYes.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("name",binding.Username.text.toString())
+            intent.putExtra("name",binding.Username.text.toString()+" (Guest)")
             startActivity(intent)
         }
         binding.btnNo.setOnClickListener {

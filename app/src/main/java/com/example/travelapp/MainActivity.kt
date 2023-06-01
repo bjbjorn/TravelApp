@@ -1,9 +1,8 @@
 package com.example.travelapp
-import android.app.Activity
-import android.content.Intent
-import android.graphics.Bitmap
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,6 +22,7 @@ import com.example.travelapp.data.data.PostRoomRepository
 import com.example.travelapp.databinding.ActivityMain2Binding
 import com.example.travelapp.ui.gallery.GalleryFragment
 import com.example.travelapp.ui.home.HomeFragment
+import com.google.android.material.internal.ViewUtils.hideKeyboard
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,11 +30,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
     private lateinit var postRepository : PostRepository
     private lateinit var adapter: Recycler
-    private val postList = arrayListOf<Post>()
+    private var postList = arrayListOf<Post>()
     private val galleryFragment = GalleryFragment()
     private val CAMERA_REQUEST_CODE = 101
     private val homeFragment = HomeFragment()
 
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMain2Binding.inflate(layoutInflater)
@@ -54,11 +55,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.appBarMain.contentMain.activityMain.button.setOnClickListener {
             val newPostTitle = binding.appBarMain.contentMain.activityMain.txtBar.text.toString()
-            postList.add(Post(newPostTitle, false, "texttexttexttext"))
+            postList.add(Post(newPostTitle, account, false, null))
             //adapter.notifyItemInserted(todoList.size-1)
             adapter.notifyDataSetChanged()
             binding.appBarMain.contentMain.activityMain.txtBar.text.clear()
             binding.appBarMain.contentMain.activityMain.txtBar.clearFocus()
+            hideKeyboard(it)
 
         }
         restorePostsFromPreviousSession()
@@ -71,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_gallery
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -129,21 +131,14 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK) {
-            when(requestCode){
-                CAMERA_REQUEST_CODE->{
-
-                    val bitmap = data?.extras?.get("data") as Bitmap
-                    val foto = findViewById<ImageView>(R.id.idViewPager)
-                    foto.setImageBitmap(bitmap)
-                }
-            }
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_settings -> {
+            postList.clear()
+            adapter.notifyDataSetChanged()
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
-
-
-
 }

@@ -43,6 +43,7 @@ class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerVi
 
             val checkBoxTodo = findViewById<CheckBox>(R.id.checkBox)
 
+            findViewById<TextView>(R.id.postedBy).text = currentTodoItem.Name
             findViewById<TextView>(R.id.textView2).text = currentTodoItem.title
             findViewById<CheckBox>(R.id.checkBox).isChecked = currentTodoItem.isDone
             findViewById<TextView>(R.id.textView3).text = currentTodoItem.text
