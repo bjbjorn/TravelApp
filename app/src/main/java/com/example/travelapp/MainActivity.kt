@@ -22,6 +22,7 @@ import com.example.travelapp.data.data.PostRepository
 import com.example.travelapp.data.data.PostRoomRepository
 import com.example.travelapp.databinding.ActivityMain2Binding
 import com.example.travelapp.ui.gallery.GalleryFragment
+import com.example.travelapp.ui.home.HomeFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private val postList = arrayListOf<Post>()
     private val galleryFragment = GalleryFragment()
     private val CAMERA_REQUEST_CODE = 101
+    private val homeFragment = HomeFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +87,8 @@ class MainActivity : AppCompatActivity() {
                     binding.appBarMain.contentMain.activityMain.rvwPost.visibility = View.VISIBLE
                     binding.appBarMain.contentMain.activityMain.txtBar.visibility = View.VISIBLE
                     binding.appBarMain.contentMain.activityMain.button.visibility = View.VISIBLE
+                    supportFragmentManager.beginTransaction().show(homeFragment).commit()
+                    navController.navigate(R.id.nav_home)
                     true
                 }
                 R.id.nav_gallery -> {
