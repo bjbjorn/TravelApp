@@ -84,4 +84,5 @@ class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerVi
         }
     }
     override fun getItemCount(): Int = items.size
+    //x
 }
