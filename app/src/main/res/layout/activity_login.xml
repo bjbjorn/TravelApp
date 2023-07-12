@@ -45,7 +45,7 @@
         app:layout_constraintVertical_bias="0.272" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textNewUser"
         android:layout_width="204dp"
         android:layout_height="0dp"
         android:text="Username does not exist, do you want to continue as guest?"
@@ -63,7 +63,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btnNo"
         app:layout_constraintHorizontal_bias="0.605"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textNewUser" />
 
     <Button
         android:id="@+id/btnNo"
@@ -73,6 +73,6 @@
         android:layout_marginEnd="88dp"
         android:text="No"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textNewUser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

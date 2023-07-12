@@ -16,7 +16,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        binding.textView4.visibility = View.INVISIBLE
+        binding.textNewUser.visibility = View.INVISIBLE
         binding.btnYes.visibility = View.INVISIBLE
         binding.btnNo.visibility = View.INVISIBLE
 
@@ -30,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
 
             }
             else {
-                binding.textView4.visibility = View.VISIBLE
+                binding.textNewUser.visibility = View.VISIBLE
                 binding.btnYes.visibility = View.VISIBLE
                 binding.btnNo.visibility = View.VISIBLE
             }
@@ -39,10 +39,11 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("name",binding.Username.text.toString()+" (Guest)")
             startActivity(intent)
+
         }
         binding.btnNo.setOnClickListener {
 
-            binding.textView4.visibility = View.INVISIBLE
+            binding.textNewUser.visibility = View.INVISIBLE
             binding.btnYes.visibility = View.INVISIBLE
             binding.btnNo.visibility = View.INVISIBLE
             binding.Username.text = null

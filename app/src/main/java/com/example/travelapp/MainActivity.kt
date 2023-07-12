@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun restorePostsFromPreviousSession() {
-        postList.addAll(postRepository.load().reversed())
+        postList.addAll(postRepository.load())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

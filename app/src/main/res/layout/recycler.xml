@@ -8,25 +8,16 @@
 
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/countryName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="200dp"
-        android:text="Title"
+        android:text="Country"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/viewOnMaps"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:hint="Add Text"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="1.0" />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -59,7 +50,21 @@
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/textView2"
+        app:layout_constraintBottom_toTopOf="@id/countryName"
         tools:layout_editor_absoluteX="22dp"
         tools:layout_editor_absoluteY="60dp" />
+
+    <TextView
+        android:id="@+id/countryInfo"
+        android:layout_width="234dp"
+        android:layout_height="40dp"
+        android:text="info"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countryName"
+        app:layout_constraintVertical_bias="0.112" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
