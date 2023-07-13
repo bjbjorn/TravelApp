@@ -23,5 +23,4 @@ class PostRoomRepository(appContext: Context) : PostRepository {
             dao.insert(items)
         }
     }
-
 }
