@@ -17,7 +17,6 @@ class HomeFragment : Fragment() {
 
   private var _binding: FragmentHomeBinding? = null
   private val binding get() = _binding!!
-  private val CAMERA_REQUEST_CODE = 1
 
   override fun onCreateView(
     inflater: LayoutInflater,
