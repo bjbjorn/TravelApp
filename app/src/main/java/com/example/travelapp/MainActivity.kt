@@ -1,5 +1,8 @@
 package com.example.travelapp
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -137,6 +140,22 @@ class MainActivity : AppCompatActivity() {
         }
         else -> {
             super.onOptionsItemSelected(item)
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when(requestCode){
+                CAMERA_REQUEST_CODE->{
+
+                    val bitmap = data?.extras?.get("data") as Bitmap
+
+                    adapter.addImage(bitmap)
+                    adapter.notifyDataSetChanged()
+                    adapter.notifyChange()
+                }
+            }
         }
     }
 }

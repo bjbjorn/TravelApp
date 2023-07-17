@@ -1,24 +1,40 @@
 package com.example.travelapp.ui.home;
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import com.example.travelapp.MainActivity
 
 import com.example.travelapp.R
 import com.example.travelapp.data.data.Post
+import com.example.travelapp.ui.gallery.ViewPagerAdapter
 import com.google.android.material.snackbar.Snackbar
+import kotlin.contracts.contract
+import kotlin.coroutines.coroutineContext
 
 class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerViewHolder>() {
 
     inner class RecyclerViewHolder(currentItemView: View) : RecyclerView.ViewHolder(currentItemView)
     private lateinit var view: View
+
+    private val CAMERA_REQUEST_CODE = 101
+    lateinit var imageList: List<Bitmap>
+    lateinit var viewPager: ViewPager
+    lateinit var viewPagerAdapter: ViewPagerAdapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
 
@@ -48,6 +64,18 @@ class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerVi
             "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates",
             "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam",
             "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia", "Zimbabwe", "Palestine")
+
+
+
+        viewPager = view.findViewById(R.id.idViewPager)
+        imageList = ArrayList()
+        viewPagerAdapter = ViewPagerAdapter(view.context, imageList)
+        viewPager.adapter = viewPagerAdapter
+
+
+
+
+
         view.findViewById<Button>(R.id.viewOnMaps).setOnClickListener {
 
 
@@ -62,6 +90,11 @@ class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerVi
                 Snackbar.make(view,"Please enter an existing country.",Snackbar.LENGTH_LONG).setAction("Action",null).show()
             }
         }
+        view.findViewById<Button>(R.id.cameraBtn).setOnClickListener {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(it.context as Activity, intent, CAMERA_REQUEST_CODE, null)
+        }
+
         return RecyclerViewHolder(view)
     }
 
@@ -83,6 +116,16 @@ class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerVi
             }
         }
     }
+
+    fun addImage(image: Bitmap) {
+        viewPagerAdapter.addToList(image)
+    }
     override fun getItemCount(): Int = items.size
+    fun notifyChange() {
+        viewPagerAdapter.notifyDataSetChanged()
+    }
     //x
+
+
 }
+

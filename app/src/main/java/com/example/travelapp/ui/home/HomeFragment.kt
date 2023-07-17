@@ -1,5 +1,9 @@
 package com.example.travelapp.ui.home
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapRegionDecoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +15,9 @@ import com.example.travelapp.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+  private var _binding: FragmentHomeBinding? = null
   private val binding get() = _binding!!
+  private val CAMERA_REQUEST_CODE = 1
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -31,6 +36,8 @@ class HomeFragment : Fragment() {
     }
     return root
   }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
