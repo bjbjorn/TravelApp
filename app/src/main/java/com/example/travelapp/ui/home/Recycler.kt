@@ -11,20 +11,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import com.example.travelapp.MainActivity
 
 import com.example.travelapp.R
 import com.example.travelapp.data.data.Post
 import com.example.travelapp.ui.gallery.ViewPagerAdapter
 import com.google.android.material.snackbar.Snackbar
-import kotlin.contracts.contract
-import kotlin.coroutines.coroutineContext
 
 class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerViewHolder>() {
 
@@ -90,7 +85,7 @@ class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerVi
                 Snackbar.make(view,"Please enter an existing country.",Snackbar.LENGTH_LONG).setAction("Action",null).show()
             }
         }
-        view.findViewById<Button>(R.id.cameraBtn).setOnClickListener {
+        view.findViewById<Button>(R.id.cameraBtnMain).setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(it.context as Activity, intent, CAMERA_REQUEST_CODE, null)
         }

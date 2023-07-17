@@ -48,7 +48,7 @@ private var _binding: FragmentGalleryBinding? = null
     }
 
 
-    binding.cameraBtn.setOnClickListener {
+    binding.cameraBtnMain.setOnClickListener {
       requestCamera.launch(android.Manifest.permission.CAMERA)
     }
 
