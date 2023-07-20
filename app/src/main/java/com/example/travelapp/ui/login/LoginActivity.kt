@@ -19,19 +19,18 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var userRepository : UserRepository
-    private lateinit var adapter : Recycler
     private var userList = arrayListOf<User>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        restoreUsersFromPreviousSession()
 
         binding.textNewUser.visibility = View.INVISIBLE
         binding.btnYes.visibility = View.INVISIBLE
         binding.btnNo.visibility = View.INVISIBLE
         userRepository = UserRoomRepository(applicationContext)
         setContentView(binding.root)
+        restoreUsersFromPreviousSession()
 
         binding.button.setOnClickListener { view ->
             val naam = binding.Username.text.toString()
@@ -43,18 +42,12 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
 
             }
-
-            if(userList.toArray().contains(binding.Username.text.toString())){
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("name",binding.Username.text.toString())
-                startActivity(intent)
-            }
-            else if(!userList.toArray().contains(naam)){
+            else if(!userList.any { it.username.equals(naam) }){
                 binding.textNewUser.visibility = View.VISIBLE
                 binding.btnYes.visibility = View.VISIBLE
                 binding.btnNo.visibility = View.VISIBLE
             }
-            else if(userList.toArray().contains(naam)){
+            else if(userList.any { it.username.equals(naam) }){
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("name",binding.Username.text.toString())
                 startActivity(intent)
