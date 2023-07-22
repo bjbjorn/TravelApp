@@ -18,7 +18,6 @@ class ViewPagerAdapter(val context: Context, var imageList: List<Bitmap>) : Page
         return imageList.size
     }
 
-
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view === `object` as RelativeLayout
     }
@@ -26,7 +25,6 @@ class ViewPagerAdapter(val context: Context, var imageList: List<Bitmap>) : Page
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val mLayoutInflater =
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
 
         val itemView: View = mLayoutInflater.inflate(R.layout.image_slider_item, container, false)
         val imageView: ImageView = itemView.findViewById<View>(R.id.idIVImage) as ImageView

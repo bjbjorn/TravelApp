@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.example.travelapp.MainActivity
 import com.example.travelapp.R
 import com.example.travelapp.data.data.User
@@ -40,14 +41,13 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("name",binding.Username.text.toString())
                 startActivity(intent)
-
             }
-            else if(!userList.any { it.username.equals(naam) }){
+            else if(!userList.any { it.username.equals(naam)}){
                 binding.textNewUser.visibility = View.VISIBLE
                 binding.btnYes.visibility = View.VISIBLE
                 binding.btnNo.visibility = View.VISIBLE
             }
-            else if(userList.any { it.username.equals(naam) }){
+            else if(userList.any { it.username.equals(naam)}){
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("name",binding.Username.text.toString())
                 startActivity(intent)
@@ -56,35 +56,24 @@ class LoginActivity : AppCompatActivity() {
                 Snackbar.make(view, "Please enter a username and try again.", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
             }
-
-            else {
-
-
-                /*binding.textNewUser.visibility = View.VISIBLE
-                binding.btnYes.visibility = View.VISIBLE
-                binding.btnNo.visibility = View.VISIBLE*/
-            }
         }
         binding.btnYes.setOnClickListener {
             val naam = binding.Username.text.toString()
-
             userList.add(User(naam))
             userRepository.save(userList)
+
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("name",binding.Username.text.toString()+" (New User)")
             startActivity(intent)
-
         }
 
         binding.btnNo.setOnClickListener {
-
             binding.textNewUser.visibility = View.INVISIBLE
             binding.btnYes.visibility = View.INVISIBLE
             binding.btnNo.visibility = View.INVISIBLE
             binding.Username.text = null
         }
     }
-
     private fun restoreUsersFromPreviousSession() {
         userList.addAll(userRepository.load())
     }
