@@ -9,6 +9,7 @@ import androidx.room.ColumnInfo
 @Entity
 data class User (
     @ColumnInfo(name = "Username") var username : String?,
+    @ColumnInfo(name = "images") var images: String?,
     @PrimaryKey(autoGenerate = true) var id: Int = 0
 ): java.io.Serializable {
 

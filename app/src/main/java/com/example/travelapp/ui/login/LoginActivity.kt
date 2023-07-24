@@ -36,13 +36,7 @@ class LoginActivity : AppCompatActivity() {
         binding.button.setOnClickListener { view ->
             val naam = binding.Username.text.toString()
 
-            if(binding.Username.text.toString() == "Abdullah" || binding.Username.text.toString() == "Bjorn") {
-                //
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("name",binding.Username.text.toString())
-                startActivity(intent)
-            }
-            else if(!userList.any { it.username.equals(naam)}){
+            if(!userList.any { it.username.equals(naam)}){
                 binding.textNewUser.visibility = View.VISIBLE
                 binding.btnYes.visibility = View.VISIBLE
                 binding.btnNo.visibility = View.VISIBLE
@@ -59,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.btnYes.setOnClickListener {
             val naam = binding.Username.text.toString()
-            userList.add(User(naam))
+            userList.add(User(naam, null))
             userRepository.save(userList)
 
             val intent = Intent(this, MainActivity::class.java)

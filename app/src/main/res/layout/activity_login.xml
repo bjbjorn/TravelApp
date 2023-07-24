@@ -48,7 +48,7 @@
         android:id="@+id/textNewUser"
         android:layout_width="204dp"
         android:layout_height="0dp"
-        android:text="Username does not exist, do you want to continue as guest?"
+        android:text="Username does not exist, do you want to create a new account?"
         android:textColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -12,21 +12,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.travelapp.ImageConverter
-import com.example.travelapp.Images
 
 import com.example.travelapp.R
 import com.example.travelapp.data.data.Post
 import com.example.travelapp.ui.gallery.ViewPagerAdapter
 import java.util.*
-
-import java.io.ByteArrayOutputStream
 
 class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerViewHolder>() {
 
@@ -67,15 +62,15 @@ class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerVi
 
         holder.itemView.apply {
 
-            val checkBoxTodo = findViewById<CheckBox>(R.id.checkBox)
+            val checkBox = findViewById<CheckBox>(R.id.checkBox)
 
             findViewById<TextView>(R.id.postedBy).text = currentTodoItem.Name
             findViewById<TextView>(R.id.countryName).text = currentTodoItem.title
-            checkBoxTodo.isChecked = currentTodoItem.isDone
+            checkBox.isChecked = currentTodoItem.isDone
             findViewById<TextView>(R.id.countryInfo).text = currentTodoItem.text
-            checkBoxTodo.isChecked = currentTodoItem.isDone
-            checkBoxTodo.setOnClickListener{
-                currentTodoItem.isDone = checkBoxTodo.isChecked
+            checkBox.isChecked = currentTodoItem.isDone
+            checkBox.setOnClickListener{
+                currentTodoItem.isDone = checkBox.isChecked
             }
             val stringImageList = currentTodoItem.images
             val images = ImageConverter().toImages(stringImageList).images
@@ -91,9 +86,6 @@ class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerVi
         }
     }
 
-    fun addImage(image: Bitmap) {
-        viewPagerAdapter.addToList(image)
-    }
     override fun getItemCount(): Int = items.size
     fun notifyChange() {
         viewPagerAdapter.notifyDataSetChanged()

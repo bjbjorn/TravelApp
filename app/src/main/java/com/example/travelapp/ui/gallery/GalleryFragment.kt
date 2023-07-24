@@ -13,6 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.travelapp.R
+import com.example.travelapp.data.data.User
+import com.example.travelapp.data.data.UserRepository
 import com.example.travelapp.databinding.FragmentGalleryBinding
 
 class GalleryFragment : Fragment() {
@@ -20,6 +22,8 @@ class GalleryFragment : Fragment() {
 private var _binding: FragmentGalleryBinding? = null
   private val binding get() = _binding!!
   private val CAMERA_REQUEST_CODE = 1
+  private lateinit var userRepository : UserRepository
+  private var userList = arrayListOf<User>()
 
   lateinit var imageList: List<Bitmap>
   lateinit var viewPager: ViewPager
@@ -78,5 +82,13 @@ private var _binding: FragmentGalleryBinding? = null
         }
       }
     }
+  }
+
+  private fun restoreUsersFromPreviousSession() {
+    userList.addAll(userRepository.load())
+  }
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    userRepository.save(userList)
   }
 }

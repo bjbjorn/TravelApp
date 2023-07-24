@@ -40,6 +40,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
+    private lateinit var activityMainBinding: com.example.travelapp.databinding.ActivityMainBinding
     private lateinit var postRepository : PostRepository
     private lateinit var adapter: Recycler
     private var postList = arrayListOf<Post>()
@@ -77,6 +78,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMain2Binding.inflate(layoutInflater)
+        activityMainBinding = binding.appBarMain.contentMain.activityMain
         setContentView(binding.root)
         postRepository = PostRoomRepository(applicationContext)
 
@@ -87,15 +89,15 @@ class MainActivity : AppCompatActivity() {
 
 
         setSupportActionBar(binding.appBarMain.toolbar)
-        binding.appBarMain.contentMain.activityMain.rvwPost.adapter = adapter
+        activityMainBinding.rvwPost.adapter = adapter
         binding.appBarMain.contentMain.activityMain.rvwPost.layoutManager = LinearLayoutManager(this)
 
-        var textAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, countries)
-        binding.appBarMain.contentMain.activityMain.txtCountry.setAdapter(textAdapter)
+        val textAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, countries)
+        activityMainBinding.txtCountry.setAdapter(textAdapter)
 
-        binding.appBarMain.contentMain.activityMain.button.setOnClickListener {
-            val newPostTitle = binding.appBarMain.contentMain.activityMain.txtCountry.text.toString()
-            val newPostText = binding.appBarMain.contentMain.activityMain.txtInfo.text.toString()
+        activityMainBinding.button.setOnClickListener {
+            val newPostTitle = activityMainBinding.txtCountry.text.toString()
+            val newPostText = activityMainBinding.txtInfo.text.toString()
             if(!countries.contains(newPostTitle)) {
                 Snackbar.make(findViewById(R.id.activity_main) ,"Please enter an existing country.",
                     Snackbar.LENGTH_LONG).setAction("Action",null).show()
@@ -103,10 +105,10 @@ class MainActivity : AppCompatActivity() {
             else {
                 postList.add(0, Post(newPostTitle, account, false, newPostText, null))
                 adapter.notifyDataSetChanged()
-                binding.appBarMain.contentMain.activityMain.txtCountry.text.clear()
-                binding.appBarMain.contentMain.activityMain.txtCountry.clearFocus()
-                binding.appBarMain.contentMain.activityMain.txtInfo.text.clear()
-                binding.appBarMain.contentMain.activityMain.txtInfo.clearFocus()
+                activityMainBinding.txtCountry.text.clear()
+                activityMainBinding.txtCountry.clearFocus()
+                activityMainBinding.txtInfo.text.clear()
+                activityMainBinding.txtInfo.clearFocus()
                 hideKeyboard(it)
             }
 
@@ -134,19 +136,19 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {menuItem->
             when (menuItem.itemId) {
                 R.id.nav_home -> {
-                    binding.appBarMain.contentMain.activityMain.rvwPost.visibility = View.VISIBLE
-                    binding.appBarMain.contentMain.activityMain.txtCountry.visibility = View.VISIBLE
-                    binding.appBarMain.contentMain.activityMain.txtInfo.visibility = View.VISIBLE
-                    binding.appBarMain.contentMain.activityMain.button.visibility = View.VISIBLE
+                    activityMainBinding.rvwPost.visibility = View.VISIBLE
+                    activityMainBinding.txtCountry.visibility = View.VISIBLE
+                    activityMainBinding.txtInfo.visibility = View.VISIBLE
+                    activityMainBinding.button.visibility = View.VISIBLE
                     supportFragmentManager.beginTransaction().show(homeFragment).commit()
                     navController.navigate(R.id.nav_home)
                     true
                 }
                 R.id.nav_gallery -> {
-                    binding.appBarMain.contentMain.activityMain.rvwPost.visibility = View.INVISIBLE
-                    binding.appBarMain.contentMain.activityMain.txtCountry.visibility = View.INVISIBLE
-                    binding.appBarMain.contentMain.activityMain.txtInfo.visibility = View.INVISIBLE
-                    binding.appBarMain.contentMain.activityMain.button.visibility = View.INVISIBLE
+                    activityMainBinding.rvwPost.visibility = View.INVISIBLE
+                    activityMainBinding.txtCountry.visibility = View.INVISIBLE
+                    activityMainBinding.txtInfo.visibility = View.INVISIBLE
+                    activityMainBinding.button.visibility = View.INVISIBLE
 
                     supportFragmentManager.beginTransaction().show(galleryFragment).commit()
                     navController.navigate(R.id.nav_gallery)
