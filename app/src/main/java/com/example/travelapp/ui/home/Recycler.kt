@@ -26,6 +26,8 @@ import com.example.travelapp.data.data.Post
 import com.example.travelapp.ui.gallery.ViewPagerAdapter
 import java.util.*
 
+import java.io.ByteArrayOutputStream
+
 class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerViewHolder>() {
 
     inner class RecyclerViewHolder(currentItemView: View) : RecyclerView.ViewHolder(currentItemView)
@@ -38,6 +40,7 @@ class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerVi
     lateinit var currentPostSelected: String
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
+
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler, parent, false)
 
         view.findViewById<Button>(R.id.viewOnMaps).setOnClickListener {
@@ -52,7 +55,6 @@ class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerVi
         view.findViewById<Button>(R.id.cameraBtnMain).setOnClickListener {
             currentPostSelected = view.findViewById<TextView>(R.id.countryName).text.toString()
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-      //      intent.putExtra("post", "Denmark")
             startActivityForResult(it.context as Activity, intent, CAMERA_REQUEST_CODE, null)
         }
 

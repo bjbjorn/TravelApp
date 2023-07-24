@@ -8,7 +8,7 @@
 
 
     <AutoCompleteTextView
-        android:id="@+id/txtTitle"
+        android:id="@+id/txtCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -25,7 +25,7 @@
         app:layout_constraintVertical_bias="0.883" />
 
     <EditText
-        android:id="@+id/txtText"
+        android:id="@+id/txtInfo"
         android:layout_width="229dp"
         android:layout_height="45dp"
         android:ems="10"
@@ -36,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtTitle"
+        app:layout_constraintTop_toBottomOf="@id/txtCountry"
         app:layout_constraintVertical_bias="0.085" />
 
     <Button
@@ -47,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toEndOf="@+id/txtTitle"
+        app:layout_constraintStart_toEndOf="@+id/txtCountry"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.887" />
 
@@ -55,7 +55,7 @@
         android:id="@+id/rvwPost"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtTitle"
+        app:layout_constraintBottom_toTopOf="@+id/txtCountry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

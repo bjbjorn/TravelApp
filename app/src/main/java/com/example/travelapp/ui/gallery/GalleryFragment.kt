@@ -51,7 +51,6 @@ private var _binding: FragmentGalleryBinding? = null
     binding.cameraBtnMain.setOnClickListener {
       requestCamera.launch(android.Manifest.permission.CAMERA)
     }
-
     return root
   }
 
@@ -72,7 +71,6 @@ private var _binding: FragmentGalleryBinding? = null
     if (resultCode == Activity.RESULT_OK) {
       when(requestCode){
         CAMERA_REQUEST_CODE->{
-
           val bitmap = data?.extras?.get("data") as Bitmap
           imageList = imageList + bitmap
           viewPagerAdapter.addToList(bitmap)
