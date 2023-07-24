@@ -1,23 +1,23 @@
 package com.example.travelapp
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
-
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travelapp.data.data.Post
 import com.example.travelapp.data.data.PostRepository
@@ -27,7 +27,10 @@ import com.example.travelapp.ui.gallery.GalleryFragment
 import com.example.travelapp.ui.home.HomeFragment
 import com.example.travelapp.ui.home.Recycler
 import com.google.android.material.internal.ViewUtils.hideKeyboard
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import java.io.ByteArrayOutputStream
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -83,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         binding.appBarMain.contentMain.activityMain.rvwPost.adapter = adapter
         binding.appBarMain.contentMain.activityMain.rvwPost.layoutManager = LinearLayoutManager(this)
 
-        var textAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, countries)
+        val textAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, countries)
         binding.appBarMain.contentMain.activityMain.txtTitle.setAdapter(textAdapter)
 
         binding.appBarMain.contentMain.activityMain.button.setOnClickListener {
@@ -93,7 +96,8 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.make(findViewById(R.id.activity_main) ,"Please enter an existing country.", Snackbar.LENGTH_LONG).setAction("Action",null).show()
             }
             else {
-                postList.add(0, Post(newPostTitle, account, false, newPostText))
+                //val images = Images(emptyList<Long>() as ArrayList<Long>)
+                postList.add(0, Post(newPostTitle, account, false, newPostText, null))
                 adapter.notifyDataSetChanged()
                 binding.appBarMain.contentMain.activityMain.txtTitle.text.clear()
                 binding.appBarMain.contentMain.activityMain.txtTitle.clearFocus()
@@ -185,12 +189,27 @@ class MainActivity : AppCompatActivity() {
                 CAMERA_REQUEST_CODE->{
 
                     val bitmap = data?.extras?.get("data") as Bitmap
-
-                    adapter.addImage(bitmap)
+                    val bitmapString = bitmapToString(bitmap)
+                    for(post in postList){
+                        if(post.title == adapter.currentPostSelected) {
+                            var imageList = post.images
+                            val images = ImageConverter().toImages(imageList).images.toMutableList()
+                            images += bitmapString
+                            val imageClass = Images()
+                            imageClass.images = images
+                            post.images = ImageConverter().toString(imageClass)
+                        }
+                    }
                     adapter.notifyDataSetChanged()
                     adapter.notifyChange()
                 }
             }
         }
+    }
+    fun bitmapToString(bitmap: Bitmap): String {
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        val b = baos.toByteArray()
+        return Base64.getEncoder().encodeToString(b)
     }
 }

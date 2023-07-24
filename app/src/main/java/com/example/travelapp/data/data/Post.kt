@@ -11,7 +11,6 @@ data class Post(
     @ColumnInfo(name = "posted_by") val Name: String,
     @ColumnInfo(name = "is_done") var isDone: Boolean,
     @ColumnInfo(name = "text") var text: String?,
+    @ColumnInfo(name = "images") var images: String?,
     @PrimaryKey(autoGenerate = true) var id: Int = 0
-): java.io.Serializable {
-
-}
+): java.io.Serializable
