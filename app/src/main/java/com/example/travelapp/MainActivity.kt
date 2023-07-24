@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG).setAction("Action",null).show()
             }
             else {
-                postList.add(0, Post(newPostTitle, account, false, newPostText))
+                postList.add(0, Post(newPostTitle, account, false, newPostText, null))
                 adapter.notifyDataSetChanged()
                 binding.appBarMain.contentMain.activityMain.txtCountry.text.clear()
                 binding.appBarMain.contentMain.activityMain.txtCountry.clearFocus()
