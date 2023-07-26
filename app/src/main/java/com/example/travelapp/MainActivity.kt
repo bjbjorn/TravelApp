@@ -103,6 +103,11 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.make(findViewById(R.id.activity_main) ,"Please enter an existing country.",
                     Snackbar.LENGTH_LONG).setAction("Action",null).show()
             }
+            else if(postList.any {it.title.equals(newPostTitle)
+                        || it.Name.equals(findViewById(R.id.Username))}){
+                Snackbar.make(findViewById(R.id.activity_main) ,"This post already exists, check it out!",
+                    Snackbar.LENGTH_LONG).setAction("Action",null).show()
+            }
             else {
                 postList.add(0, Post(newPostTitle, account, false, newPostText, null))
                 adapter.notifyDataSetChanged()
