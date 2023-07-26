@@ -24,9 +24,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travelapp.data.data.Post
 import com.example.travelapp.data.data.PostRepository
 import com.example.travelapp.data.data.PostRoomRepository
-import com.example.travelapp.data.data.User
-import com.example.travelapp.data.data.UserRepository
-import com.example.travelapp.data.data.UserRoomRepository
 import com.example.travelapp.databinding.ActivityMain2Binding
 import com.example.travelapp.ui.gallery.GalleryFragment
 import com.example.travelapp.ui.home.HomeFragment
@@ -87,6 +84,10 @@ class MainActivity : AppCompatActivity() {
 
         adapter = Recycler(postList)
 
+
+        val bundle = Bundle()
+        bundle.putString("account", account)
+        galleryFragment.arguments = bundle
 
         setSupportActionBar(binding.appBarMain.toolbar)
         activityMainBinding.rvwPost.adapter = adapter
