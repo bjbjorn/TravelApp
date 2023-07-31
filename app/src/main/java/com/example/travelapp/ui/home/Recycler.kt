@@ -38,6 +38,7 @@ class Recycler(val items: List<Post>) : RecyclerView.Adapter<Recycler.RecyclerVi
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler, parent, false)
 
+
         view.findViewById<Button>(R.id.viewOnMaps).setOnClickListener {
 
             val location = view.findViewById<TextView>(R.id.countryName).text.toString()

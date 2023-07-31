@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -41,7 +42,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var postRepository : PostRepository
     private lateinit var adapter: Recycler
     private var postList = arrayListOf<Post>()
-    private val galleryFragment = GalleryFragment()
     private val CAMERA_REQUEST_CODE = 101
     private val homeFragment = HomeFragment()
     private val countries = arrayOf("Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda",
@@ -84,10 +84,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter = Recycler(postList)
 
-
-        val bundle = Bundle()
-        bundle.putString("account", account)
-        galleryFragment.arguments = bundle
+        val galleryFragment = GalleryFragment()
 
         setSupportActionBar(binding.appBarMain.toolbar)
         activityMainBinding.rvwPost.adapter = adapter
@@ -156,13 +153,34 @@ class MainActivity : AppCompatActivity() {
                     activityMainBinding.txtInfo.visibility = View.INVISIBLE
                     activityMainBinding.button.visibility = View.INVISIBLE
 
-                    supportFragmentManager.beginTransaction().show(galleryFragment).commit()
+//                    val bundle = Bundle()
+                //    bundle.putString("account", account)
+  //                  galleryFragment.arguments = bundle
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+
+                    galleryFragment.account = account
+
+                    fragmentTransaction.show(galleryFragment).commit()
+
                     navController.navigate(R.id.nav_gallery)
                     true
                 }
                 else -> false
             }
         }
+
+        val requestCamera = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+
+            } else {
+                Toast.makeText(
+                    this,
+                    "Permission not granted, you can grant permission in app settings",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+        requestCamera.launch(android.Manifest.permission.CAMERA)
     }
 
     private fun restorePostsFromPreviousSession() {

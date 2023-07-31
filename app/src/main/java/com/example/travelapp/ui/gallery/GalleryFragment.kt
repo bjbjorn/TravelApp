@@ -33,6 +33,7 @@ private var _binding: FragmentGalleryBinding? = null
   private var userList = arrayListOf<User>()
   private lateinit var currentUser: User
 
+  lateinit var account: String
   lateinit var imageList: List<Bitmap>
   lateinit var viewPager: ViewPager
   lateinit var viewPagerAdapter: ViewPagerAdapter
@@ -43,13 +44,16 @@ private var _binding: FragmentGalleryBinding? = null
     val root: View = binding.root
     userRepository = context?.let { UserRoomRepository(it) }!!
     restoreUsersFromPreviousSession()
-    val account = arguments?.getString("account")
+
+   // val bundle = arguments
+  //  val message = bundle!!.getString("account")
     for(user in userList) {
       if(user.username == account) {
         currentUser = user
         break
       }
     }
+
     val stringImageList = currentUser.images
     val images = ImageConverter().toImages(stringImageList).images
     imageList = ArrayList()
@@ -61,7 +65,7 @@ private var _binding: FragmentGalleryBinding? = null
     viewPagerAdapter = ViewPagerAdapter(root.context, imageList)
     viewPager.adapter = viewPagerAdapter
 
-    val requestCamera= registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+    val requestCamera = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
       if (it) {
         camera()
       } else {
@@ -100,17 +104,13 @@ private var _binding: FragmentGalleryBinding? = null
 
           val bitmap = data?.extras?.get("data") as Bitmap
           val bitmapString = bitmapToString(bitmap)
-          var picList = currentUser.images
+          val picList = currentUser.images
           val images = ImageConverter().toImages(picList).images.toMutableList()
           images += bitmapString
           val imageClass = Images()
           imageClass.images = images
           currentUser.images = ImageConverter().toString(imageClass)
-
-
-
-          //imageList = imageList + bitmap
-          //viewPagerAdapter.addToList(bitmap)
+          imageList += bitmap
           viewPagerAdapter.notifyDataSetChanged()
         }
       }
