@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -153,12 +152,12 @@ class MainActivity : AppCompatActivity() {
                     activityMainBinding.txtInfo.visibility = View.INVISIBLE
                     activityMainBinding.button.visibility = View.INVISIBLE
 
-//                    val bundle = Bundle()
-                //    bundle.putString("account", account)
-  //                  galleryFragment.arguments = bundle
+                    val bundle = Bundle()
+                    bundle.putString("account", account)
+                    galleryFragment.arguments = bundle
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-                    galleryFragment.account = account
+            //        galleryFragment.account = account
 
                     fragmentTransaction.show(galleryFragment).commit()
 

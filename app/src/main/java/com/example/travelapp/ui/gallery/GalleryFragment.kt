@@ -33,7 +33,6 @@ private var _binding: FragmentGalleryBinding? = null
   private var userList = arrayListOf<User>()
   private lateinit var currentUser: User
 
-  lateinit var account: String
   lateinit var imageList: List<Bitmap>
   lateinit var viewPager: ViewPager
   lateinit var viewPagerAdapter: ViewPagerAdapter
@@ -45,14 +44,7 @@ private var _binding: FragmentGalleryBinding? = null
     userRepository = context?.let { UserRoomRepository(it) }!!
     restoreUsersFromPreviousSession()
 
-   // val bundle = arguments
-  //  val message = bundle!!.getString("account")
-    for(user in userList) {
-      if(user.username == account) {
-        currentUser = user
-        break
-      }
-    }
+    currentUser = userList[0]
 
     val stringImageList = currentUser.images
     val images = ImageConverter().toImages(stringImageList).images
@@ -76,8 +68,6 @@ private var _binding: FragmentGalleryBinding? = null
         ).show()
       }
     }
-
-
     binding.cameraBtnMain.setOnClickListener {
       requestCamera.launch(android.Manifest.permission.CAMERA)
     }
@@ -110,7 +100,8 @@ private var _binding: FragmentGalleryBinding? = null
           val imageClass = Images()
           imageClass.images = images
           currentUser.images = ImageConverter().toString(imageClass)
-          imageList += bitmap
+          imageList = imageList+bitmap
+          viewPagerAdapter.imageList = imageList
           viewPagerAdapter.notifyDataSetChanged()
         }
       }

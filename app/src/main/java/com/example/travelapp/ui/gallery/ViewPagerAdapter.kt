@@ -9,11 +9,9 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.example.travelapp.R
-import com.example.travelapp.data.data.PostRepository
 import java.util.*
 
 class ViewPagerAdapter(val context: Context, var imageList: List<Bitmap>) : PagerAdapter() {
-    private lateinit var post : PostRepository
     override fun getCount(): Int {
         return imageList.size
     }
@@ -38,8 +36,5 @@ class ViewPagerAdapter(val context: Context, var imageList: List<Bitmap>) : Page
         container.removeView(`object` as RelativeLayout)
     }
 
-    fun addToList(bitmap: Bitmap) {
-        imageList = imageList + bitmap
-    }
 
 }
