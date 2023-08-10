@@ -11,6 +11,7 @@
         android:id="@+id/idViewPager"
         android:layout_width="300dp"
         android:layout_height="400dp"
+        android:translationZ="1dp"
         android:scaleType="center"
         android:adjustViewBounds="true"
         android:layout_gravity="center"
@@ -18,8 +19,16 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="60dp"
-        android:layout_marginBottom="60dp" />
+        android:layout_marginBottom="60dp" >
 
+    </androidx.viewpager.widget.ViewPager>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:translationZ="0dp"
+        android:text="This is a public gallery for all users" />
 
     <Button
         android:id="@+id/cameraBtnMain"

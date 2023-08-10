@@ -157,8 +157,6 @@ class MainActivity : AppCompatActivity() {
                     galleryFragment.arguments = bundle
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-            //        galleryFragment.account = account
-
                     fragmentTransaction.show(galleryFragment).commit()
 
                     navController.navigate(R.id.nav_gallery)
