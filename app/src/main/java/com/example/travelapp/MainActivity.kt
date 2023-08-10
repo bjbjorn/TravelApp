@@ -225,6 +225,7 @@ class MainActivity : AppCompatActivity() {
                             val imageClass = Images()
                             imageClass.images = images
                             post.images = ImageConverter().toString(imageClass)
+                            postRepository.save(postList)
                         }
                     }
                     adapter.notifyDataSetChanged()
